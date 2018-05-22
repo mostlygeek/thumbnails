@@ -23,6 +23,7 @@ var _ = Resource("image", func() {
 	Action("upload", func() {
 		Routing(POST("/"), PUT("/"))
 		Description("Update the image")
+		MultipartForm()
 		Response(OK)
 		Response(BadRequest)
 	})
@@ -43,10 +44,8 @@ var _ = Resource("image", func() {
 		Routing(GET("/thumbnail/:type"))
 		Params(func() {
 			Param("type", String, "Size of thumbnail to generate", func() {
-				Enum("small", "medium", "large", "square", "box")
+				Enum("small", "medium", "large")
 			})
-			Param("x", Integer, "Width of bounding box")
-			Param("y", Integer, "Height of bounding box")
 		})
 		Response(OK)
 		Response(BadRequest) // if missing X or Y when box = height
